@@ -1,0 +1,20 @@
+Users are gonna start generating data in the website.
+In order to associate the data with each user, we need to make an account for each user to uniquely identify them in our database.
+The other reason is to restrict access to certain areas of the website according to the status of the user.
+We need to make our website secure.
+home --> either register or login --> secrets (data.)
+level 1 encryption is username and password only
+the first thing we are doing is to set up a login and register page so that the user can view and maybe add their secrets. 
+for this we are going to use the most basic level 1 of security.
+this will simply be creating an account for the user and save it in the database and then authenticate the user id so that he can login in the later date
+
+after the login and registration for email id has been done and we are able to register, store the details in the local repository, and then login, we will move on to the 2nd level of security and authentication => database encryption.
+
+level 2 : encryption -> scrambling something so that the people cant know what the original message was. the scramble of message requires a key to unscramble the message. we are going to use mongoose-encryption. It uses AES algorithm. it can encrypt and authenticate. we will use encryption now.
+
+one way to encrypt is to create an encryption key and a signing key.
+second way is defining a secret and use that secret to exit the database
+plugins are basically extra bits of packaged code we can add to the mongoose schema to give them more functionalities.
+
+using environment variables to keep secrets safe : 
+    when we commit the code to github, all the information including the secret key is visible in the open to anyone that can access our code. to solve this conundrum we use environmental variables. it is a file where we keep very sensitive information such as secret keys and api keys. we will use dotenv module for this. 
