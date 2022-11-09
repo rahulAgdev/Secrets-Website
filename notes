@@ -18,3 +18,15 @@ plugins are basically extra bits of packaged code we can add to the mongoose sch
 
 using environment variables to keep secrets safe : 
     when we commit the code to github, all the information including the secret key is visible in the open to anyone that can access our code. to solve this conundrum we use environmental variables. it is a file where we keep very sensitive information such as secret keys and api keys. we will use dotenv module for this. 
+
+
+level 3 of authentication is password hashing. hashing takes away the need of an encryption key which could be used to hack into our database.
+we dont decrypt the password in this case. we use the hash function to turn the password into a hash(mathematical equations). its almost impossible to convert a hash equation back to the password.
+# when we run the hash function on the same string, then the hash will always be the same.
+
+problems with hashing : hacking passwords 
+    a hacker can spend some time to find out what passwords are the most common and then use these to check if any user has used that password. this way the hacker can easily find the password of many of the users through simple trial and error.
+
+level 4 of authentication is salting and hashing : 
+    along with the passowrd we create a random set of characters known as salt before the process of hashing. the resulting hash is created with the password as well as the salt. This makes the user database much more secure. the salt is something the user doesnt need to remember. it is stored in the database with the hash. when the user tries to login you combine the password with the salt in the user base and then check if the password is correct or not. instead of md5 we can use another hash -> bcrypt to keep the password safe coz this hash is incredibly slow with the greatest gpus only able to compute 19k hashes/ s instead of 20b/sec for md5.
+    to provide even more security when using bcrypt, it has a concept of salt rounds. it refers to the no. of saltings we are going to provide to the password(no. of times we generate random salt). 

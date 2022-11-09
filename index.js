@@ -5,7 +5,8 @@ const bodyParser=require("body-parser");
 const ejs = require("ejs");
 const app = express();
 const mongoose = require("mongoose")
-const encrypt = require("mongoose-encryption");
+// const encrypt = require("mongoose-encryption");
+const md5 = require("md5");
 
 const tempPort = 3000;
 app.use(express.static("public"));
@@ -30,7 +31,7 @@ const userSchema = new mongoose.Schema({
 // creating secret --> converting into environment variable. USE process.env.SECRET to access the secret from the env file.
 
 // adding the plugin encrypt to the schema. make sure to add this before making the model. but we dont want to encrypt the email as we have to traverse and serach for it in the db. therefore we will only encrypt the password
-userSchema.plugin(encrypt, {secret: process.env.SECRET, encryptedFields: ["password"]});
+// userSchema.plugin(encrypt, {secret: process.env.SECRET, encryptedFields: ["password"]});
 
 // Creating model for the schema 
 const User = new mongoose.model("User", userSchema);
@@ -51,7 +52,7 @@ app.get("/register", (req,res)=>{
 app.post("/register", (req,res)=>{
     const newUser = new User({
         email: req.body.username,
-        password: req.body.password
+        password: md5(req.body.password)
     });
 
     newUser.save((err)=>{
@@ -67,7 +68,7 @@ app.post("/register", (req,res)=>{
 
 app.post("/login", function(req,res){
     const username = req.body.username;
-    const password = req.body.password;
+    const password = mp5(req.body.password);
 
     User.findOne({email: username}, (err, foundUser)=>{
         if(err){
